@@ -19,7 +19,7 @@ const Popup = ({correctLetters, wrongLetters, selectedWord, setPlayable, playAga
 
     useEffect(() => {
          setPlayable(playable);
-    },[])
+    })
 
 
     return (

@@ -60,7 +60,7 @@ function App() {
           }
         }
        
-        if(key === 'Enter') playAgain()
+        else if(key === 'Enter') playAgain()
      }
 
     window.addEventListener('keydown', handleKeydown)
@@ -82,7 +82,7 @@ function App() {
  
 
   return (
-    <div >
+    <div className='main'>
       <Header />
       <div className='game-container'>
         <Figure wrongLetters={wrongLetters}/>
