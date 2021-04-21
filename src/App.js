@@ -64,9 +64,9 @@ function App() {
         <Figure wrongLetters={wrongLetters}/>
         <WrongLetters wrongLetters={wrongLetters}/>
         <Word selectedWord={selectedWord} correctLetters={correctLetters}/>
-        <Popup />
-        <Notification showNotication={showNotification}/>
       </div>
+        <Popup />
+        <Notification showNotification={showNotification}/>
     </>
   );
 }
