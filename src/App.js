@@ -25,20 +25,15 @@ function App() {
   const [showNotification, setShowNotification] = useState(false)
 
 
-  // useEffect(() => {
-  //     fetch('https://random-word-api.herokuapp.com/word')
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       console.log(data[0])
-  //       setSelectedWord(data[0])
-  //       })
-  // }, [])
+  const getRandomWord = async () => {
+      let res = await fetch('https://random-word-api.herokuapp.com/word')
+      let data = await res.json()
+      console.log(data[0])
+      setSelectedWord(data[0])
+  }
 
-   useEffect(async() => {
-        let res = await fetch('https://random-word-api.herokuapp.com/word')
-        let data = await res.json()
-        console.log(data[0])
-        setSelectedWord(data[0])
+  useEffect(() => {
+      getRandomWord()
   }, [])
 
 
@@ -74,10 +69,12 @@ function App() {
   }, [selectedWord, correctLetters, wrongLetters, playable])
 
 
-
-
-
-  
+  function playAgain(){
+    setPlayable(true)
+    setCorrectLetters([])
+    setWrongLetters([])
+    getRandomWord()
+  }
 
   return (
     <div >
@@ -87,7 +84,7 @@ function App() {
         <WrongLetters wrongLetters={wrongLetters}/>
         <Word selectedWord={selectedWord} correctLetters={correctLetters}/>
       </div>
-        <Popup />
+        <Popup correctLetters={correctLetters} wrongLetters={wrongLetters} selectedWord={selectedWord} setPlayable={setPlayable} playAgain={playAgain}/>
         <Notification showNotification={showNotification}/>
     </div>
   );
