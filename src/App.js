@@ -40,6 +40,7 @@ function App() {
   useEffect(() => {
     const handleKeydown = evt => {
       const { key, keyCode } = evt
+      // console.log(key)
       if (playable && keyCode >= 65 && keyCode <= 90) {
           const letter = key.toLowerCase();
           if (selectedWord.includes(letter)) {
@@ -58,6 +59,8 @@ function App() {
             }
           }
         }
+       
+        if(key === 'Enter') playAgain()
      }
 
     window.addEventListener('keydown', handleKeydown)
@@ -75,6 +78,8 @@ function App() {
     setWrongLetters([])
     getRandomWord()
   }
+
+ 
 
   return (
     <div >
