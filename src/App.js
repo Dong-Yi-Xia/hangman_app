@@ -10,23 +10,43 @@ import {showNotification as show} from './helpers/helpers'
 
 
 
-const words = ['app', 'programming', 'interface', 'wizard'];
-let selectedWord = words[Math.floor(Math.random() * words.length)];
+// const words = ['app', 'programming', 'interface', 'wizard'];
+// let selectedWord = words[Math.floor(Math.random() * words.length)];
+
+// https://random-word-api.herokuapp.com/word
+
 
 
 function App() {
+  const [selectedWord, setSelectedWord] = useState('')
   const [playable, setPlayable] = useState(true)
   const [correctLetters, setCorrectLetters] = useState([])
   const [wrongLetters, setWrongLetters] = useState([])
   const [showNotification, setShowNotification] = useState(false)
 
 
+  // useEffect(() => {
+  //     fetch('https://random-word-api.herokuapp.com/word')
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       console.log(data[0])
+  //       setSelectedWord(data[0])
+  //       })
+  // }, [])
+
+   useEffect(async() => {
+        let res = await fetch('https://random-word-api.herokuapp.com/word')
+        let data = await res.json()
+        console.log(data[0])
+        setSelectedWord(data[0])
+  }, [])
+
+
   useEffect(() => {
     const handleKeydown = evt => {
       const { key, keyCode } = evt
-        if (playable && keyCode >= 65 && keyCode <= 90) {
+      if (playable && keyCode >= 65 && keyCode <= 90) {
           const letter = key.toLowerCase();
-
           if (selectedWord.includes(letter)) {
             if (!correctLetters.includes(letter)) {
               //create a new array, by spreading in the currentLetters
@@ -45,20 +65,22 @@ function App() {
         }
      }
 
-     window.addEventListener('keydown', handleKeydown)
+    window.addEventListener('keydown', handleKeydown)
 
     //cleanup so there is only 1 event listner when rerender
     return () => window.removeEventListener('keydown', handleKeydown)
 
     //empty [] will be render on inital render. Having dependences when updated, this function will be called
-  }, [correctLetters, wrongLetters, playable])
+  }, [selectedWord, correctLetters, wrongLetters, playable])
 
 
 
 
+
+  
 
   return (
-    <>
+    <div >
       <Header />
       <div className='game-container'>
         <Figure wrongLetters={wrongLetters}/>
@@ -67,7 +89,7 @@ function App() {
       </div>
         <Popup />
         <Notification showNotification={showNotification}/>
-    </>
+    </div>
   );
 }
 
